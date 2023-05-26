@@ -10,9 +10,15 @@ const createToken = (_id) => {
 // signup user
 const signupUser = async (req, res) => {
   const {email, password} = req.body;
-  res.status(200).json({
-    email, password, message: "Credentials received"
-  });
+  try {
+    // create user account
+    const user = await User.signup(email, password);
+    // create a token
+    const token = createToken(user._id);
+    res.status(200).json({ email, token });
+  } catch (error) {
+    res.status(500).json({ error: error.message })
+  }
 };
 
 module.exports = {
