@@ -1,4 +1,5 @@
 const express = require('express');
+const { signupUser } = require('./userController');
 
 const router = express.Router();
 
@@ -8,8 +9,6 @@ router.post('/login', (req, res) => {
 });
 
 // signup user
-router.post('/signup', (req, res) => {
-  res.status(200).json("Signing up");
-});
+router.post('/signup', signupUser);
 
 module.exports = router;
