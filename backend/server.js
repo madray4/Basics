@@ -13,6 +13,12 @@ app.use(express.json());
 // ROUTES
 
 // connect to database & listen for requests
-app.listen(process.env.PORT, () => {
-  console.log('~~~ Server listening on port: ' + process.env.PORT);
-});
+mongoose.connect(process.env.MONGODB_URI)
+  .then (() => {
+    console.log('~~~ Connected to databse');
+    app.listen(process.env.PORT, () => {
+      console.log('~~~ Server listening on port: ' + process.env.PORT);
+    });
+  }) .catch ((error) => {
+    console.log(`~~~ ${error.message}`);
+  });
