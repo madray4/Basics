@@ -12,6 +12,16 @@ const userSchema = new Schema({
   password: {
     type: String,
     required: true
+  },
+  // cartItems: [{
+  //     mainPID: String,
+  //     productName: String,
+  //     size: String,
+  //     quantity: Number
+  // }],
+  admin: {
+    type: Boolean,
+    default: false
   }
 });
 
@@ -20,7 +30,7 @@ userSchema.statics.login = async function(email, password) {
 
 };
 // signup static method
-userSchema.statics.signup = async function(email, password) {
+userSchema.statics.signup = async function(email, password, admin) {
   // validate there's an email and password
   if(!email || !password) throw Error('All fields must be filled');
 
@@ -35,7 +45,7 @@ userSchema.statics.signup = async function(email, password) {
   // hash password and store in database
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(password, salt);
-  const user = await this.create({ email, password: hash });
+  const user = await this.create({ email, password: hash, admin });
   return user;
 };
 
