@@ -27,7 +27,18 @@ const userSchema = new Schema({
 
 // login static method
 userSchema.statics.login = async function(email, password) {
+  // validate there's an email and password
+  if(!email || !password) throw Error('All fields must be filled');
 
+  // check if account exists
+  const user = await this.findOne({ email });
+  if(!user) throw Error('Invalid Credentials');
+
+  // vaidate password
+  const match = await bcrypt.compare(password, user.password);
+  if(!match) throw Error('Invalid Credentials');
+
+  return user;
 };
 // signup static method
 userSchema.statics.signup = async function(email, password, admin) {

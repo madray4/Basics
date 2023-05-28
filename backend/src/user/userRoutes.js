@@ -1,12 +1,10 @@
 const express = require('express');
-const { signupUser } = require('./userController');
+const { login, signupUser } = require('./userController');
 
 const router = express.Router();
 
 // login user
-router.post('/login', (req, res) => {
-  res.status(200).json("Logging in");
-});
+router.post('/login', login);
 
 // signup user
 router.post('/signup', signupUser);
