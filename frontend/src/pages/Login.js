@@ -1,16 +1,18 @@
 import { useRef } from 'react';
 
 // redux
-// import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../store/slices/authSlice';
 
 const Login = () => {
+  const dispatch = useDispatch();
+  
   const emailRef = useRef();
   const passwordRef = useRef();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(emailRef.current.value);
-    console.log(passwordRef.current.value);
+    await dispatch(login({ email: emailRef.current.value, password: passwordRef.current.value }));
 
   };
   return (
