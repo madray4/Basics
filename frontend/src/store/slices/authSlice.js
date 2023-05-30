@@ -10,10 +10,26 @@ const initialState = {
 export const login = createAsyncThunk(
   'auth/login',
   async ({ email, password }, { rejectWithValue }) => {
-    console.log(email, password);
-    return email;
+    const response = await fetch('/api/user/login',{
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json'},
+      body: JSON.stringify({ email, password })
+    });
+    const json = await response.json();
+    if(response.ok){
+      localStorage.setItem('user', JSON.stringify(json));
+      return json;
+    }
+    return rejectWithValue(json);
   }
 );
+
+export const logout = createAsyncThunk(
+  'auth/logout',
+  async () => {
+    localStorage.removeItem('user');
+  }
+)
 
 const authSlice = createSlice({
   name: "Auth",
@@ -37,6 +53,13 @@ const authSlice = createSlice({
           user: action.payload
       }
     });
+
+    // logout cases
+    builder.addCase(logout.fulfilled, (state) => {
+      return { ...state,
+        user: null
+      }
+    })
   }
 });
 
