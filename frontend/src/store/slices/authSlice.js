@@ -29,7 +29,24 @@ export const logout = createAsyncThunk(
   async () => {
     localStorage.removeItem('user');
   }
-)
+);
+
+export const signup = createAsyncThunk(
+  'auth/signup',
+  async ({ email, password }, { rejectWithValue }) => {
+    const response = await fetch('api/user/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+    const json = await response.json();
+    if(response.ok){
+      localStorage.setItem('user', JSON.stringify(json));
+      return json;
+    }
+    return rejectWithValue(json);
+  }
+);
 
 const authSlice = createSlice({
   name: "Auth",
@@ -59,7 +76,27 @@ const authSlice = createSlice({
       return { ...state,
         user: null
       }
-    })
+    });
+
+    // signup cases
+    builder.addCase(signup.pending, (state) => {
+      return { ...state, loading: true }
+    });
+    builder.addCase(signup.rejected, (state, action) => {
+      return { ...state,
+        loading: false,
+        error: action.payload.error,
+        emptyFields: action.payload.emptyFields
+      }
+    });
+    builder.addCase(signup.fulfilled, (state, action) => {
+      return { ...state,
+        loading: false,
+        error: null,
+        emptyFields: [],
+        user: action.payload
+      }
+    });
   }
 });
 
