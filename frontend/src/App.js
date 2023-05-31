@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 // components
+import Navbar from './components/Navbar';
 
 // pages
 import Login from './pages/Login';
@@ -13,7 +14,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-      <h3>123</h3>
+      <Navbar/>
       <div className="pages">
         <Routes>
           <Route

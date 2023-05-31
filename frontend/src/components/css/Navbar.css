@@ -1,0 +1,29 @@
+*{
+  margin: 0;
+}
+
+.navbar{
+
+}
+
+.navbar-header{
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  margin: auto;
+  margin-top: 20px;
+}
+
+.navbar-header a{
+  text-decoration: none;
+}
+
+.navbar-title{
+  color: blue;
+}
+
+.navbar-login{
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
