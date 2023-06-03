@@ -13,8 +13,13 @@ const Navbar = () => {
           <h1 className='navbar-title'>BASICS</h1>
         </Link>
         <div className='navbar-login'>
-          <button>Log In</button>
-          <button>Sign Up</button>
+          <Link to="/login">
+            <p>Log In</p>
+          </Link>
+          <Link to="/login">
+            <p>Sign Up</p>
+          </Link>
+
         </div>
         {user && <h4>{user.email}</h4>}
       </div>
