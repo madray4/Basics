@@ -21,10 +21,24 @@
 
 .navbar-title{
   color: blue;
+  font-size: 3em;
 }
 
-.navbar-login{
+.navbar-auth{
   display: flex;
   align-items: center;
   gap: 20px;
+}
+
+.navbar-login-button{
+  font-size: 1.25em;
+  color: white;
+  background-color: black;
+  padding: 3px 10px;
+}
+
+.navbar-signup-button{
+  font-size: 1.25em;
+  padding: 3px 10px;
+  outline: solid black 1px;
 }
