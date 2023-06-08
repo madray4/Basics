@@ -1,7 +1,8 @@
+import './Navbar.css';
+
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import './css/Navbar.css';
 
 const Navbar = () => {
   const { user } = useSelector(state => state.auth);
@@ -14,12 +15,12 @@ const Navbar = () => {
         </Link>
         <div className='navbar-auth'>
           {!user &&
-            <Link to="/login">
+            <Link to="/auth/login">
               <p className='navbar-login-button'>Log In</p>
             </Link>
           }
           {!user &&
-            <Link to="/login">
+            <Link to="/auth/signup">
               <p className='navbar-signup-button'>Sign Up</p>
             </Link>
           }

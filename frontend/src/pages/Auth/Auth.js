@@ -1,12 +1,17 @@
-import { useRef } from 'react';
+import './Auth.css'
+
+import { useState, useRef } from 'react';
 
 // redux
 import { useDispatch, useSelector } from 'react-redux';
-import { login, logout, signup } from '../store/slices/authSlice';
+import { login, logout, signup } from '../../store/slices/authSlice';
+import { useParams } from 'react-router-dom';
 
 const Auth = () => {
   const dispatch = useDispatch();
   
+  // used to determine whether user is attempting to login or signup
+  const { choice } = useParams()
   const { user } = useSelector(state => state.auth);
   
   const emailRef = useRef();
@@ -30,9 +35,25 @@ const Auth = () => {
   };
 
   return (
-    <div>
+    <div className="auth">
+      <div className="auth-wrapper">
+        <h2>{ choice === 'login' ? "Log In" : "Sign Up" }</h2>
+          <input
+            type="email"
+            ref={ emailRef }
+            placeholder="Email Address"
+          />
+          <input
+            type="password"
+            ref={ passwordRef }
+            placeholder="Password"
+          />
+          <div className="auth-submit-button">Submit</div>
+      </div>
+
+{/* 
       <form onSubmit={ handleSubmit }>
-        <h3>Log In</h3>
+        <h2>Log In</h2>
         { user && <h3>{ user.email }</h3>}
         <label>Email: </label>
         <input
@@ -60,9 +81,9 @@ const Auth = () => {
           ref={ passwordSURef }
           />
         <button>Signup</button>
-      </form>
+      </form> */}
 
-      <button onClick={handleLogout}>Log Out</button>
+      {/* <button onClick={handleLogout}>Log Out</button> */}
     </div>
   );
 };

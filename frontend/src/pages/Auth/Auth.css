@@ -1,0 +1,47 @@
+.not-selected{
+  color: gray;
+}
+
+
+input{
+  margin-top: 1em;
+  width: 80%;
+  margin-left: 10%;
+  font-size: 1.25em;
+  height: 2em;
+  border: 1px solid #CFCFCF;
+  border-radius: 5px;
+}
+
+h2{
+  text-align: center;
+  font-weight: 500;
+  font-size: 1.5em;
+  margin-top: 1em;
+}
+
+.auth{
+
+}
+
+.auth-wrapper{
+  width: 25%;
+  margin: auto;
+  margin-top:2em;
+  /* border: 1px solid #CFCFCF; */
+  border: 1px solid black;
+
+  border-radius: 5px;
+}
+
+.auth-submit-button{
+  font-size: 1.5em;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid #CFCFCF;
+  border-radius: 5px;
+  margin: auto;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  width: 30%;
+}

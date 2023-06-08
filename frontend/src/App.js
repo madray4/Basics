@@ -5,10 +5,10 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 // components
-import Navbar from './components/Navbar';
+import Navbar from './components/Navbar/Navbar';
 
 // pages
-import Auth from './pages/Auth';
+import Auth from './pages/Auth/Auth';
 
 function App() {
   return (
@@ -22,7 +22,7 @@ function App() {
             element={<p>HOME</p>}>
           </Route>
           <Route
-            path='/login'
+            path='/auth/:choice'
             element={<Auth/>}>
           </Route>
         </Routes>
