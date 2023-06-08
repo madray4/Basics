@@ -12,7 +12,7 @@
   justify-content: space-between;
   width: 90%;
   margin: auto;
-  margin-top: 10px;
+  margin-top: 1em;
 }
 
 .navbar-header a{
@@ -43,4 +43,20 @@
   padding: 3px 10px;
   outline: solid black 1px;
   border-radius: 5px;
+}
+
+.navbar-product-categories{
+  display: flex;
+  align-items: center;
+  width: 80%;
+  margin: auto;
+  margin-top: 0.5em;
+  padding-bottom: 0.5em;
+  justify-content:space-around;
+}
+
+.navbar-product-catergories-wrapper{
+  border-top: 0.5px solid #CFCFCF;
+  background-color: #F4F3F1;
+  margin-top: 0.5em;
 }

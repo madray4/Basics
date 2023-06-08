@@ -19,7 +19,7 @@ const productSchema = new Schema({
   },
   sizesAndStock: [{
     size: String,
-    stock: Number
+    // stock: Number
   }],
   color: {
     type: String,

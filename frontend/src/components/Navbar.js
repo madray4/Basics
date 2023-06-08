@@ -19,9 +19,18 @@ const Navbar = () => {
           <Link to="/login">
             <p className='navbar-signup-button'>Sign Up</p>
           </Link>
-
         </div>
         {user && <h4>{user.email}</h4>}
+      </div>
+      <div className="navbar-product-catergories-wrapper">
+        <div className="navbar-product-categories">
+          <p>T-Shirts</p>
+          <p>Long Sleeves</p>
+          <p>Hoodies</p>
+          <p>Shorts</p>
+          <p>Sweats</p>
+          <p>Jeans</p>
+        </div>
       </div>
     </div>
   )  
