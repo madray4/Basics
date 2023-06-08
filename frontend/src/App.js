@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import Navbar from './components/Navbar';
 
 // pages
-import Login from './pages/Login';
+import Auth from './pages/Auth';
 
 function App() {
   return (
@@ -23,7 +23,7 @@ function App() {
           </Route>
           <Route
             path='/login'
-            element={<Login/>}>
+            element={<Auth/>}>
           </Route>
         </Routes>
       </div>

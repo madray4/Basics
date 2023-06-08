@@ -13,14 +13,18 @@ const Navbar = () => {
           <h1 className='navbar-title'>BASICS</h1>
         </Link>
         <div className='navbar-auth'>
-          <Link to="/login">
-            <p className='navbar-login-button'>Log In</p>
-          </Link>
-          <Link to="/login">
-            <p className='navbar-signup-button'>Sign Up</p>
-          </Link>
+          {!user &&
+            <Link to="/login">
+              <p className='navbar-login-button'>Log In</p>
+            </Link>
+          }
+          {!user &&
+            <Link to="/login">
+              <p className='navbar-signup-button'>Sign Up</p>
+            </Link>
+          }
+          {user && <h4>{user.email}</h4>}
         </div>
-        {user && <h4>{user.email}</h4>}
       </div>
       <div className="navbar-product-catergories-wrapper">
         <div className="navbar-product-categories">
