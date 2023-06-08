@@ -26,6 +26,7 @@ h2{
 
 .auth-wrapper{
   width: 25%;
+  min-width: 350px;
   margin: auto;
   margin-top:2em;
   /* border: 1px solid #CFCFCF; */

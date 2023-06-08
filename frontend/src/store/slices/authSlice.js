@@ -34,12 +34,15 @@ export const logout = createAsyncThunk(
 export const signup = createAsyncThunk(
   'auth/signup',
   async ({ email, password }, { rejectWithValue }) => {
-    const response = await fetch('api/user/signup', {
+    console.log("here")
+    const response = await fetch('/api/user/signup', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json'},
       body: JSON.stringify({ email, password })
     });
     const json = await response.json();
+    console.log("here")
+    console.log(json);
     if(response.ok){
       localStorage.setItem('user', JSON.stringify(json));
       return json;

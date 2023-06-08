@@ -20,10 +20,10 @@ const Auth = () => {
   const emailSURef = useRef();
   const passwordSURef = useRef();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    await dispatch(login({ email: emailRef.current.value, password: passwordRef.current.value }));
-  };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   await dispatch(login({ email: emailRef.current.value, password: passwordRef.current.value }));
+  // };
 
   const handleLogout = () => {
     dispatch(logout());
@@ -31,8 +31,19 @@ const Auth = () => {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    dispatch(signup({ email: emailSURef.current.value, password: passwordSURef.current.value }));
+    await dispatch(signup({ email: emailSURef.current.value, password: passwordSURef.current.value }));
   };
+
+  const handleAuth = async (e) => {
+    e.preventDefault();
+
+    if(choice === 'login'){
+      await dispatch(login({ email: emailRef.current.value, password: passwordRef.current.value }));
+    }
+    else{
+      await dispatch(signup({ email: emailRef.current.value, password: passwordRef.current.value }));
+    }
+  }
 
   return (
     <div className="auth">
@@ -48,42 +59,9 @@ const Auth = () => {
             ref={ passwordRef }
             placeholder="Password"
           />
-          <div className="auth-submit-button">Submit</div>
+          <div className="auth-submit-button" onClick={handleAuth}>Submit</div>
+          <button onClick={handleLogout}>Logout</button>
       </div>
-
-{/* 
-      <form onSubmit={ handleSubmit }>
-        <h2>Log In</h2>
-        { user && <h3>{ user.email }</h3>}
-        <label>Email: </label>
-        <input
-          type="email"
-          ref={ emailRef }
-          />
-        <label>Password: </label>
-        <input
-          type="password"
-          ref={ passwordRef }
-          />
-        <button>Log In</button>
-      </form>
-
-      <form onSubmit={ handleSignup }>
-        <h3>Sign Up</h3>
-        <label>Email: </label>
-        <input
-          type="email"
-          ref={ emailSURef }
-          />
-        <label>Password: </label>
-        <input
-          type="password"
-          ref={ passwordSURef }
-          />
-        <button>Signup</button>
-      </form> */}
-
-      {/* <button onClick={handleLogout}>Log Out</button> */}
     </div>
   );
 };
