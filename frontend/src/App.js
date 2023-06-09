@@ -19,7 +19,7 @@ function App() {
         <Routes>
           <Route
             path='/'
-            element={<img src="https://basics-seeds.s3.amazonaws.com/surprised+pikachu+hd.jfif"></img>}>
+            element={<p>HOME</p>}>
           </Route>
           <Route
             path='/auth/:choice'

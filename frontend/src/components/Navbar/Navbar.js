@@ -29,6 +29,7 @@ const Navbar = () => {
       </div>
       <div className="navbar-product-catergories-wrapper">
         <div className="navbar-product-categories">
+          <p>All</p>
           <p>T-Shirts</p>
           <p>Long Sleeves</p>
           <p>Hoodies</p>
