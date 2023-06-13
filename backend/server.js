@@ -19,7 +19,7 @@ app.use('/api/products', productRoutes);
 // connect to database & listen for requests
 mongoose.connect(process.env.MONGODB_URI)
   .then (() => {
-    console.log('~~~ Connected to databse');
+    console.log('~~~ Connected to database');
     app.listen(process.env.PORT, () => {
       console.log('~~~ Server listening on port: ' + process.env.PORT);
     });
