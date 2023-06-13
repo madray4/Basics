@@ -9,7 +9,7 @@ const initialState = {
 export const getProducts = createAsyncThunk(
   'product/getProducts',
   async () => {
-    const response = await fetch('api/products/all', {});
+    const response = await fetch('/api/products/all', {});
     const json = await response.json();
     for(let i = 0; i < json.length; i++){
       for(let j = 0; j < json[i].sizes.length; j++){
