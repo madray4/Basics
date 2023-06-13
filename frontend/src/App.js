@@ -9,6 +9,7 @@ import Navbar from './components/Navbar/Navbar';
 
 // pages
 import Auth from './pages/Auth/Auth';
+import Products from './pages/Products/Products';
 
 function App() {
   return (
@@ -24,6 +25,10 @@ function App() {
           <Route
             path='/auth/:choice'
             element={<Auth/>}>
+          </Route>
+          <Route
+            path='/products/:productType'
+            element={<Products/>}>
           </Route>
         </Routes>
       </div>

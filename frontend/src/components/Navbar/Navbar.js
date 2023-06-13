@@ -40,7 +40,9 @@ const Navbar = () => {
       </div>
       <div className="navbar-product-catergories-wrapper">
         <div className="navbar-product-categories">
-          <p>All</p>
+          <Link to="/products/all">
+            <p>All</p>
+          </Link>
           <p>T-Shirts</p>
           <p>Long Sleeves</p>
           <p>Hoodies</p>
