@@ -21,9 +21,9 @@ const productSchema = new Schema({
     type: String,
     required: true
   },
-  imageURLs: [{
-    url: String
-  }]
+  imageURL: {
+    type: String
+  }
 });
 
 module.exports = mongoose.model('Product', productSchema);

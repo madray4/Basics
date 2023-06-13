@@ -1,11 +1,22 @@
 import './Navbar.css';
 
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-
+import { getProducts } from '../../store/slices/productSlice';
 
 const Navbar = () => {
   const { user } = useSelector(state => state.auth);
+  const { products } = useSelector(state => state.product);
+  const dispatch = useDispatch();
+
+  // if(products[0]){
+  //   console.log(products[0].imageURLs[0]);
+  // }
+
+  useEffect(() => {
+    dispatch(getProducts());
+  },[]);
 
   return(
     <div className='navbar'>
