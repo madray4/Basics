@@ -1,6 +1,6 @@
 import './Products.css'
 
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProducts } from '../../store/slices/productSlice';
 
@@ -15,8 +15,11 @@ const Products = () => {
   },[]);
 
   return (
-    <div>
-      <p>PRODUCTS</p>
+    <div className="products-page">
+      <div className="products-filter">
+        <p>All</p>
+        <p>T-Shirts</p>
+      </div>
       {products && 
         <div className="products-wrapper">
           {products.map(product => {

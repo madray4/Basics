@@ -31,12 +31,24 @@ const Navbar = () => {
           <Link to="/products/all">
             <p>All</p>
           </Link>
-          <p>T-Shirts</p>
-          <p>Long Sleeves</p>
-          <p>Hoodies</p>
-          <p>Shorts</p>
-          <p>Sweats</p>
-          <p>Jeans</p>
+          <Link to="/products/t-shirts">
+            <p>T-Shirts</p>
+          </Link>
+          <Link to="/products/long-sleeves">
+            <p>Long Sleeves</p>
+          </Link>
+          <Link to="/products/hoodies">
+            <p>Hoodies</p>
+          </Link>
+          <Link to="/products/shorts">
+            <p>Shorts</p>
+          </Link>
+          <Link to="/products/sweatpants">
+            <p>Sweatpants</p>
+          </Link>
+          <Link to="/products/jeans">
+            <p>Jeans</p>
+          </Link>
         </div>
       </div>
     </div>
