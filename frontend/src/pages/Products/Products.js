@@ -1,18 +1,24 @@
 import './Products.css'
 
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProducts } from '../../store/slices/productSlice';
+import { useParams } from 'react-router-dom';
 
+import { getProducts } from '../../store/slices/productSlice';
 import Product from '../../components/Product/Product'
 
 const Products = () => {
   const dispatch = useDispatch();
-  const { products } = useSelector(state => state.product);
+  let { products } = useSelector(state => state.product);
+  const { productType } = useParams();
+  const initialFilter = productType;
+  if(initialFilter !== "all"){
+    products = products.filter(product => product.category === initialFilter);
+  }
 
   useEffect(() => {
     dispatch(getProducts());
-  },[]);
+  },[dispatch]);
 
   return (
     <div className="products-page">

@@ -16,7 +16,14 @@ export const getProducts = createAsyncThunk(
         json[i].sizes[j] = convertToString(json[i].sizes[j]);
       }
     }
-    return json;
+    // json.sort();
+    console.log(json);
+
+    const sortedJson = json.sort((productA, productB) => {
+      return (productA.category > productB.category) ? 1 : -1;
+    })
+    console.log(sortedJson);
+    return sortedJson;
   }
 );
 

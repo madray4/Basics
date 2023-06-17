@@ -1,6 +1,6 @@
 import './Navbar.css';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
@@ -31,16 +31,16 @@ const Navbar = () => {
           <Link to="/products/all">
             <p>All</p>
           </Link>
-          <Link to="/products/t-shirts">
+          <Link to="/products/t-shirt">
             <p>T-Shirts</p>
           </Link>
-          <Link to="/products/long-sleeves">
+          <Link to="/products/long-sleeve">
             <p>Long Sleeves</p>
           </Link>
-          <Link to="/products/hoodies">
+          <Link to="/products/hoodie">
             <p>Hoodies</p>
           </Link>
-          <Link to="/products/shorts">
+          <Link to="/products/short">
             <p>Shorts</p>
           </Link>
           <Link to="/products/sweatpants">
