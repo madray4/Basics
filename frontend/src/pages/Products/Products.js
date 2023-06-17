@@ -2,18 +2,31 @@ import './Products.css'
 
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 import { getProducts } from '../../store/slices/productSlice';
 import Product from '../../components/Product/Product'
 
 const Products = () => {
   const dispatch = useDispatch();
-  let { products } = useSelector(state => state.product);
+  const { products } = useSelector(state => state.product);
   const { productType } = useParams();
   const initialFilter = productType;
+  
+  let filteredProducts = [...products];
+
   if(initialFilter !== "all"){
-    products = products.filter(product => product.category === initialFilter);
+    filteredProducts = filteredProducts.filter(product => product.category === initialFilter);
+  }
+  console.log(products);
+  if(filteredProducts.length > 0){
+    filteredProducts = filteredProducts.sort((productA, productB) => {
+      return (productA.price > productB.price) ? 1 : -1;
+    })
+  }
+
+  const createProductURL = (id) => {
+    return "/product/" + id;
   }
 
   useEffect(() => {
@@ -28,14 +41,14 @@ const Products = () => {
       </div>
       {products && 
         <div className="products-wrapper">
-          {products.map(product => {
-            return <Product key={product._id} product={product}/>
+          {filteredProducts.map(product => {
+            return <Link to={createProductURL(product._id)}>
+              <Product key={product._id} product={product}/>
+              </Link>
+            
           })}
         </div>
       }
-      {/* {products && products.map(product => {
-        return <Product key={product._id} product={product}/>
-      })} */}
     </div>
   )
 }

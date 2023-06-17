@@ -10,6 +10,7 @@ import Navbar from './components/Navbar/Navbar';
 // pages
 import Auth from './pages/Auth/Auth';
 import Products from './pages/Products/Products';
+import SingleProduct from './pages/SingleProduct/SingleProduct';
 
 function App() {
   return (
@@ -29,6 +30,10 @@ function App() {
           <Route
             path='/products/:productType'
             element={<Products/>}>
+          </Route>
+          <Route
+            path='product/:PID'
+            element={<SingleProduct/>}>
           </Route>
         </Routes>
       </div>
