@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 // redux
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // components
 import Navbar from './components/Navbar/Navbar';
@@ -12,7 +12,17 @@ import Auth from './pages/Auth/Auth';
 import Products from './pages/Products/Products';
 import SingleProduct from './pages/SingleProduct/SingleProduct';
 
+// functions
+import { getProducts } from './store/slices/productSlice';
+
+
 function App() {
+  const dispatch = useDispatch();
+
+    useEffect(() => {
+      dispatch(getProducts());
+    },[dispatch]);
+
   return (
     <div className="App">
       <BrowserRouter>
