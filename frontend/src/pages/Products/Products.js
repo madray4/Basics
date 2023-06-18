@@ -18,7 +18,6 @@ const Products = () => {
   if(initialFilter !== "all"){
     filteredProducts = filteredProducts.filter(product => product.category === initialFilter);
   }
-  console.log(products);
   if(filteredProducts.length > 0){
     filteredProducts = filteredProducts.sort((productA, productB) => {
       return (productA.price > productB.price) ? 1 : -1;
