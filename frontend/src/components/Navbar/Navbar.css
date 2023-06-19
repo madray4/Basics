@@ -9,7 +9,7 @@ a {
 .navbar-header{
   display: flex;
   justify-content: space-between;
-  width: 90%;
+  width: 85%;
   margin: auto;
   margin-top: 1em;
 }
@@ -23,6 +23,13 @@ a {
   display: flex;
   align-items: center;
   gap: 20px;
+}
+
+.navbar-shopping-cart{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
 }
 
 .navbar-login-button{

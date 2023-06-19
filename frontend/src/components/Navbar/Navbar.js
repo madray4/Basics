@@ -24,6 +24,10 @@ const Navbar = () => {
             </Link>
           }
           {user && <h4>{user.email}</h4>}
+          <div className="navbar-shopping-cart">
+            <p className="navbar-shopping-cart-item-count">5</p>
+            <span className="material-symbols-outlined">shopping_basket</span>
+          </div>
         </div>
       </div>
       <div className="navbar-product-catergories-wrapper">
