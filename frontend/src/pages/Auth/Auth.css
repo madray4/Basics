@@ -3,7 +3,7 @@
 }
 
 
-input{
+.auth input{
   margin-top: 1em;
   width: 80%;
   margin-left: 10%;
@@ -13,7 +13,7 @@ input{
   border-radius: 5px;
 }
 
-h2{
+.auth h2{
   text-align: center;
   font-weight: 500;
   font-size: 1.5em;

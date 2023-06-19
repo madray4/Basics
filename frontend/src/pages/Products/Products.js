@@ -35,8 +35,8 @@ const Products = () => {
       {products && 
         <div className="products-wrapper">
           {filteredProducts.map(product => {
-            return <Link to={createProductURL(product._id)}>
-              <Product key={product._id} product={product}/>
+            return <Link key={product._id} to={createProductURL(product._id)}>
+              <Product product={product}/>
               </Link>
             
           })}
