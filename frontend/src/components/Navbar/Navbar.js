@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const { user } = useSelector(state => state.auth);
+  const { totalQuantity } = useSelector(state => state.cart);
 
   return(
     <div className='navbar'>
@@ -25,7 +26,7 @@ const Navbar = () => {
           }
           {user && <h4>{user.email}</h4>}
           <div className="navbar-shopping-cart">
-            <p className="navbar-shopping-cart-item-count">5</p>
+            <p className="navbar-shopping-cart-item-count">{totalQuantity}</p>
             <span className="material-symbols-outlined">shopping_basket</span>
           </div>
         </div>

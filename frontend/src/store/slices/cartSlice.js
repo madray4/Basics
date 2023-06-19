@@ -2,6 +2,7 @@ import { createSlice , createAsyncThunk } from '@reduxjs/toolkit'
 
 const initialState = {
   cartItems: [],
+  totalQuantity: 0,
   loading: false
 }
 
@@ -25,6 +26,7 @@ const cartSlice = createSlice({
       builder.addCase(addItemToCart.fulfilled, (state, action) => {
         let newCartItems = [...state.cartItems];
         let exists = false;
+        // finds it the specific product & size already exists in cart and adds 1 to quanity
         newCartItems = newCartItems.map(cartItem => {
           if(cartItem.size === action.payload.size && cartItem.product._id === action.payload.product._id){
             const newQuantity = cartItem.quantity + 1;
@@ -45,9 +47,11 @@ const cartSlice = createSlice({
           newCartItems.push(newCartItem);
         }
         return { ...state, 
-          cartItems: newCartItems, 
+          cartItems: newCartItems,
+          totalQuantity: state.totalQuantity + 1, 
           loading: false};
       });
+      
     // remove from cart cases
   }
 });

@@ -1,5 +1,5 @@
 import './SingleProduct.css'
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 
@@ -17,6 +17,11 @@ const SingleProduct = () => {
   const [selectedSize, setSelectedSize ] = useState(currentProduct ? currentProduct.sizes[0] : ""); 
 
   // automatically selects a size if going directly to product page
+  if(products && !currentProduct){
+      navigate("/products/all");
+  }
+
+  // redirects to all products if a use attempts to access a product that doesn't exist
   if(currentProduct && selectedSize === ""){
     setSelectedSize(currentProduct.sizes[0]);
   }
@@ -30,18 +35,12 @@ const SingleProduct = () => {
     dispatch(addItemToCart(cartItem));
   };
 
-  // redirects to all products if a use attempts to access a product that doesn't exist
-  useEffect(() => {
-    if(products && !currentProduct){
-        navigate("/products/all");
-    }
-  },[products, currentProduct])
 
   return (
     <div className="single-product-page">
     {currentProduct &&
       <div className="single-product-wrapper">
-        <img className="single-product-preview" src={currentProduct.imageURLs[0]}/>
+        <img className="single-product-preview" src={currentProduct.imageURLs[0]} alt="LOADING"/>
         <div className="single-product-description-wrapper">
           <h1>{currentProduct.name}</h1>
           <p>${currentProduct.price}</p>
@@ -51,7 +50,8 @@ const SingleProduct = () => {
               {similarProducts.map(product => {
                 return <Link key={product._id} to={"/product/" + product._id}>
                         <img className={product.color === currentProduct.color ? "current" : "not-current"} 
-                          src={product.imageURLs[0]}/>
+                          src={product.imageURLs[0]}
+                          alt="LOADING"/>
                       </Link>
               })}
             </div>
