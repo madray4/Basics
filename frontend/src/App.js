@@ -9,6 +9,7 @@ import Navbar from './components/Navbar/Navbar';
 
 // pages
 import Auth from './pages/Auth/Auth';
+import Cart from './pages/Cart/Cart';
 import Products from './pages/Products/Products';
 import SingleProduct from './pages/SingleProduct/SingleProduct';
 
@@ -31,20 +32,24 @@ function App() {
         <Routes>
           <Route
             path='/'
-            element={<p>HOME</p>}>
-          </Route>
+            element={<p>HOME</p>}
+          />
           <Route
             path='/auth/:choice'
-            element={<Auth/>}>
-          </Route>
+            element={<Auth/>}
+          />
           <Route
             path='/products/:productType'
-            element={<Products/>}>
-          </Route>
+            element={<Products/>}
+          />
           <Route
             path='product/:PID'
-            element={<SingleProduct/>}>
-          </Route>
+            element={<SingleProduct/>}
+          />
+          <Route
+            path='cart'
+            element={<Cart/>}
+          />
         </Routes>
       </div>
       </BrowserRouter>

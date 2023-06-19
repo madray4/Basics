@@ -25,10 +25,10 @@ const Navbar = () => {
             </Link>
           }
           {user && <h4>{user.email}</h4>}
-          <div className="navbar-shopping-cart">
+          <Link className="navbar-shopping-cart" to="/cart">
             <p className="navbar-shopping-cart-item-count">{totalQuantity}</p>
             <span className="material-symbols-outlined">shopping_basket</span>
-          </div>
+          </Link>
         </div>
       </div>
       <div className="navbar-product-catergories-wrapper">
