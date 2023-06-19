@@ -1,10 +1,14 @@
 import './SingleProduct.css'
-import { useParams, useNavigate, Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams, useNavigate, Link } from 'react-router-dom';
+
+// rtk
+import { addItemToCart } from '../../store/slices/cartSlice';
 
 const SingleProduct = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { PID } = useParams();
 
   const { products } = useSelector(state => state.product);
@@ -12,21 +16,26 @@ const SingleProduct = () => {
   const similarProducts = currentProduct ? products.filter(product => currentProduct.name === product.name) : "";
   const [selectedSize, setSelectedSize ] = useState(currentProduct ? currentProduct.sizes[0] : ""); 
 
-  // redirects to all products if a use attempts to access a product that doesn't exist
-  if(products && !currentProduct){
-    navigate("/products/all");
-  }
-
   // automatically selects a size if going directly to product page
   if(currentProduct && selectedSize === ""){
     setSelectedSize(currentProduct.sizes[0]);
   }
-  // functions
 
-  const addItemToCart = () => {
-    console.log(currentProduct);
-    console.log(selectedSize);
+  // functions
+  const addToCart = () => {
+    const cartItem = {
+      product: currentProduct,
+      size: selectedSize
+    };
+    dispatch(addItemToCart(cartItem));
   };
+
+  // redirects to all products if a use attempts to access a product that doesn't exist
+  useEffect(() => {
+    if(products && !currentProduct){
+        navigate("/products/all");
+    }
+  },[products, currentProduct])
 
   return (
     <div className="single-product-page">
@@ -54,7 +63,7 @@ const SingleProduct = () => {
                       >{size}</p>
             })}
           </div>
-          <button className="add-to-cart-button" onClick={addItemToCart}>
+          <button className="add-to-cart-button" onClick={addToCart}>
             <span className="material-symbols-outlined">shopping_basket</span>
             Add to Cart
           </button>
