@@ -1,8 +1,8 @@
 const express = require('express');
-const { addCartItem } = require('./cartItemController');
+const { updateCart } = require('./cartItemController');
 
 const router = express.Router();
 
-router.patch('/add-item', addCartItem)
+router.patch('/update-cart', updateCart)
 
 module.exports = router;

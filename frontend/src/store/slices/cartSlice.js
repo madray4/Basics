@@ -16,9 +16,10 @@ export const addItemToCart = createAsyncThunk(
   'cart/addItemToCart',
   async ({ product, size, quantity, currentCart, email}, { rejectWithValue }) => {
     let newCartItems = await updateCartItems({ product, size, quantity, currentCart });
-    // TODO fetch statement to add cart to users cartItems
+
+    // updates the users cart in database if logged in
     if(email){
-      const response = await fetch('/api/cart/add-item', {
+      const response = await fetch('/api/cart/update-cart', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json'},
         body: JSON.stringify({ newCartItems, email })
@@ -34,8 +35,9 @@ export const addItemToCart = createAsyncThunk(
   }
 );
 
+// imports users cart from database upon login and merges carts if there's already items in the cart prior to log in
 export const updateCartAuth = createAsyncThunk(
-  'cart/updateCartLogin',
+  'cart/updateCartAuth',
   async ({ cartItems, currentCart, email }, { rejectWithValue }) => {
     let newCartItems = [...currentCart];
     let quantity = 0;
@@ -48,14 +50,13 @@ export const updateCartAuth = createAsyncThunk(
       newCartItems = await updateCartItems({...cartItems[i], currentCart: newCartItems});
       quantity += cartItems[i].quantity;
     };
+
     if(currentCart.length > 0){
-      const response = await fetch('/api/cart/add-item', {
+      const response = await fetch('/api/cart/update-cart', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json'},
         body: JSON.stringify({ newCartItems, email })
       });
-      console.log('response');
-      console.log(response);
       if(response.ok){
         return{ newCartItems, quantity };
       }
@@ -66,8 +67,28 @@ export const updateCartAuth = createAsyncThunk(
 
 export const deleteCartItem = createAsyncThunk(
   'cart/deleteCartItem',
-  async ({ product, size, quantity, currentCart }, { rejectWithValue }) => {
+  async ({ product, size, quantity, currentCart, email }, { rejectWithValue }) => {
+    // console.log(currentCart);
     let newCartItems = currentCart.filter(cartItem => (cartItem.size !== size && cartItem.product._id !== product._id));
+    // console.log(newCartItems);
+    if(email){
+      const response = await fetch('/api/cart/update-cart', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json'},
+        body: JSON.stringify({ newCartItems, email })
+      });
+      if(response.ok){
+        let user = JSON.parse(localStorage.getItem('user'));
+        user.cartItems = newCartItems;
+        localStorage.setItem('user', JSON.stringify(user));
+        return({ newCartItems, quantity });
+
+      }
+      else{
+        return rejectWithValue({ currentCart, quantity: 0 });
+      }
+    }
+
     return({ newCartItems, quantity });
   }
 );
@@ -131,15 +152,15 @@ const cartSlice = createSlice({
     });
 
     // remove from cart cases
-      builder.addCase(deleteCartItem.pending, (state) => {
-        return { ...state, loading: true};
-      })
-      builder.addCase(deleteCartItem.fulfilled, (state, action) => {
-        return { ...state, 
-          cartItems: action.payload.newCartItems,
-          totalQuantity: state.totalQuantity - action.payload.quantity,
-          loading: false};
-      });
+    builder.addCase(deleteCartItem.pending, (state) => {
+      return { ...state, loading: true};
+    })
+    builder.addCase(deleteCartItem.fulfilled, (state, action) => {
+      return { ...state, 
+        cartItems: action.payload.newCartItems,
+        totalQuantity: state.totalQuantity - action.payload.quantity,
+        loading: false};
+    });
   }
 });
 
