@@ -64,6 +64,14 @@ export const updateCartAuth = createAsyncThunk(
   }
 );
 
+export const deleteCartItem = createAsyncThunk(
+  'cart/deleteCartItem',
+  async ({ product, size, quantity, currentCart }, { rejectWithValue }) => {
+    let newCartItems = currentCart.filter(cartItem => (cartItem.size !== size && cartItem.product._id !== product._id));
+    return({ newCartItems, quantity });
+  }
+);
+
 const updateCartItems = async ({ product, size, quantity, currentCart }) => {
   let newCartItems = [...currentCart];
   let exists = false;
@@ -89,12 +97,6 @@ const updateCartItems = async ({ product, size, quantity, currentCart }) => {
   return newCartItems;
 };
 
-export const deleteCartItem = createAsyncThunk(
-  'cart/deleteCartItem',
-  async ({ product, size }, { rejectWithValue }) => {
-    return({ product, size });
-  }
-);
 
 const cartSlice = createSlice({
   name: "Cart",
@@ -133,13 +135,10 @@ const cartSlice = createSlice({
         return { ...state, loading: true};
       })
       builder.addCase(deleteCartItem.fulfilled, (state, action) => {
-        let newCartItems = state.cartItems.filter(cartItem => 
-            (cartItem.size !== action.payload.size && cartItem.product._id !== action.payload.product._id)
-        )
-        return {...state, 
-          cartItems: newCartItems,
-          loading: false
-        };
+        return { ...state, 
+          cartItems: action.payload.newCartItems,
+          totalQuantity: state.totalQuantity - action.payload.quantity,
+          loading: false};
       });
   }
 });

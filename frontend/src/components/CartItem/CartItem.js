@@ -1,7 +1,7 @@
 import './CartItem.css'
 
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 // redux
@@ -9,11 +9,12 @@ import { deleteCartItem } from '../../store/slices/cartSlice';
 
 const CartItem = ({cartItem}) => {
   const dispatch = useDispatch();
+  const { cartItems } = useSelector(state => state.cart);
   const { product, size, quantity } = cartItem;
   const total = product.price * quantity;
   
   const deleteItem = () => {
-    dispatch(deleteCartItem(cartItem));
+    dispatch(deleteCartItem({product, size, quantity, currentCart: cartItems}));
   };
 
   const editQuantity = () => {
