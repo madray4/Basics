@@ -25,7 +25,8 @@ export const addItemToCart = createAsyncThunk(
         body: JSON.stringify({ newCartItems, email })
       });
       if(response.ok){
-        return({ newCartItems, quantity })
+        updateLocalStorage(newCartItems);
+        return({ newCartItems, quantity });
       }
       else{
         return rejectWithValue({ currentCart, quantity: 0 });
@@ -58,6 +59,7 @@ export const updateCartAuth = createAsyncThunk(
         body: JSON.stringify({ newCartItems, email })
       });
       if(response.ok){
+        updateLocalStorage(newCartItems);
         return{ newCartItems, quantity };
       }
     }
@@ -78,9 +80,10 @@ export const deleteCartItem = createAsyncThunk(
         body: JSON.stringify({ newCartItems, email })
       });
       if(response.ok){
-        let user = JSON.parse(localStorage.getItem('user'));
-        user.cartItems = newCartItems;
-        localStorage.setItem('user', JSON.stringify(user));
+        updateLocalStorage(newCartItems);
+        // let user = JSON.parse(localStorage.getItem('user'));
+        // user.cartItems = newCartItems;
+        // localStorage.setItem('user', JSON.stringify(user));
         return({ newCartItems, quantity });
 
       }
@@ -118,6 +121,11 @@ const updateCartItems = async ({ product, size, quantity, currentCart }) => {
   return newCartItems;
 };
 
+  const updateLocalStorage = async (newCartItems) => {
+    let user = JSON.parse(localStorage.getItem('user'));
+    user.cartItems = newCartItems;
+    localStorage.setItem('user', JSON.stringify(user));
+  }
 
 const cartSlice = createSlice({
   name: "Cart",
