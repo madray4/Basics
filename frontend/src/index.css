@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;500&display=swap');
 
+:root {
+  --outline: #aeb5b2;
+  background-color: #FAF9F8;
+}
+
 *{
   margin: 0;
   color: black;
@@ -15,4 +20,8 @@ body {
 .material-symbols-outlined{
   font-size: 35px;
   align-items: center;
+}
+
+.center{
+  text-align: center;
 }

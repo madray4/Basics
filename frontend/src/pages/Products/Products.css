@@ -1,9 +1,11 @@
 .product{
-  outline: solid 1px red;
-  border-radius: 5px;
+  outline: solid 1px black;
+  background-color: white;
+  border-radius: 10px;
   width: 400px;
   height: 500px;
   text-align: center;
+
 }
 
 .product img{

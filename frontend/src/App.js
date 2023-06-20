@@ -25,7 +25,7 @@ function App() {
     },[dispatch]);
 
   return (
-    <div className="App">
+    <div className="App" style={{backgroundColor: '#FAF9F8'}}>
       <BrowserRouter>
       <Navbar/>
       <div className="pages">

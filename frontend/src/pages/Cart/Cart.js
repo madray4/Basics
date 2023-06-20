@@ -2,22 +2,26 @@ import './Cart.css'
 
 import { useDispatch, useSelector } from 'react-redux';
 
+// component
+import CartItem from '../../components/CartItem/CartItem'
+
 const Cart = () => {
   const { cartItems, totalQuantity } = useSelector(state => state.cart);
 
   return (
     <div className="cart-page">
-      <div className="cart-page-items">
-        { cartItems && 
-          cartItems.map(cartItem => {
-            return <div>
-                <p>{cartItem.product.name}</p>
-                <p>{cartItem.product.color}</p>
-                <p>{cartItem.size}</p>
-                <p>{cartItem.quantity}</p>
-              </div>
-          })}
-        { totalQuantity === 0 && <h1>You should add something to your cart!</h1> }
+      <h1 className="center">Shopping Bag</h1>
+      <div className="cart-page-main">
+        <div className="cart-page-items">
+          { cartItems && 
+            cartItems.map((cartItem, i) => {
+              return <CartItem key={i} cartItem={cartItem}/>
+            })}
+          { totalQuantity === 0 && <h1 className="center">You should add something to your cart!</h1> }
+        </div>
+        <div className="cart-page-sidebar">
+          <p className="center">sidebar</p>
+        </div>
       </div>
     </div>
   )
