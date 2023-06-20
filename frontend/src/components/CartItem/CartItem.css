@@ -10,13 +10,14 @@
   border-radius: 10px;
   padding: 10px 0px;
   padding-left: 10px;
+  outline: 1px solid var(--outline);
   
 }
 
 .cart-item img{
   width: 100%;
   min-height: 100px;
-  outline: 1px solid var(--outline);
+  /* outline: 1px solid var(--outline); */
   border-radius: 10px;
 }
 

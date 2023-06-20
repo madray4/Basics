@@ -8,8 +8,15 @@ const initialState = {
 
 export const addItemToCart = createAsyncThunk(
   'cart/addItemToCart',
-  async ({ product, size}, { rejectWithValue }) => {
+  async ({ product, size, quantity}, { rejectWithValue }) => {
     // TODO fetch statement to add cart to users cartItems
+    return({ product, size, quantity });
+  }
+);
+
+export const deleteCartItem = createAsyncThunk(
+  'cart/deleteCartItem',
+  async ({ product, size }, { rejectWithValue }) => {
     return({ product, size });
   }
 );
@@ -29,10 +36,10 @@ const cartSlice = createSlice({
         // finds it the specific product & size already exists in cart and adds 1 to quanity
         newCartItems = newCartItems.map(cartItem => {
           if(cartItem.size === action.payload.size && cartItem.product._id === action.payload.product._id){
-            const newQuantity = cartItem.quantity + 1;
+            // const newQuantity = cartItem.quantity + 1;
             const newCartItem = {
               ...cartItem,
-              quantity: newQuantity
+              quantity: cartItem.quantity + action.payload.quantity
             }
             cartItem = newCartItem;
             exists = true;
@@ -51,8 +58,20 @@ const cartSlice = createSlice({
           totalQuantity: state.totalQuantity + 1, 
           loading: false};
       });
-      
-    // remove from cart cases
+
+      // remove from cart cases
+      builder.addCase(deleteCartItem.pending, (state) => {
+        return { ...state, loading: true};
+      })
+      builder.addCase(deleteCartItem.fulfilled, (state, action) => {
+        let newCartItems = state.cartItems.filter(cartItem => 
+           (cartItem.size !== action.payload.size && cartItem.product._id !== action.payload.product._id)
+        )
+        return {...state, 
+          cartItems: newCartItems,
+          loading: false
+        };
+      });
   }
 });
 

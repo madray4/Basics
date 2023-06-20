@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 
-// rtk
+// redux
 import { addItemToCart } from '../../store/slices/cartSlice';
 
 const SingleProduct = () => {
@@ -31,7 +31,8 @@ const SingleProduct = () => {
   const addToCart = () => {
     const cartItem = {
       product: currentProduct,
-      size: selectedSize
+      size: selectedSize,
+      quantity: 1
     };
     dispatch(addItemToCart(cartItem));
   };
