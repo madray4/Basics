@@ -13,12 +13,11 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
-  // cartItems: [{
-  //     mainPID: String,
-  //     productName: String,
-  //     size: String,
-  //     quantity: Number
-  // }],
+  cartItems: [{
+      product: Object,
+      size: String,
+      quantity: Number
+  }],
   admin: {
     type: Boolean,
     default: false
@@ -56,7 +55,7 @@ userSchema.statics.signup = async function(email, password) {
   // hash password and store in database
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(password, salt);
-  const user = await this.create({ email, password: hash });
+  const user = await this.create({ email, password: hash, cartItems: [] });
   return user;
 };
 

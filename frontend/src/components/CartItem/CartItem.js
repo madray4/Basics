@@ -1,5 +1,6 @@
 import './CartItem.css'
 
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -15,6 +16,10 @@ const CartItem = ({cartItem}) => {
     dispatch(deleteCartItem(cartItem));
   };
 
+  const editQuantity = () => {
+    console.log("editing item");
+  };
+
   return (
     <div className="cart-item">
       <Link className="cart-item-image" to={"/product/" + product._id}>
@@ -26,11 +31,15 @@ const CartItem = ({cartItem}) => {
         <div className="cart-item-main-description">
           <p>Color: &nbsp;{product.color}</p>
           <p>Size: &nbsp;{size}</p>
-          <p>Quantity: &nbsp;{quantity}</p>
+          <p>Quantity: &nbsp;{quantity}
+            <p className="material-symbols-outlined cart-item-edit-button" onClick={editQuantity}
+                >edit</p>
+          </p>
           <p>Total: &nbsp;${total}</p>
         </div>
       </div>
-      <p className="material-symbols-outlined cart-item-delete-button" onClick={deleteItem}>delete</p>
+      <p className="material-symbols-outlined cart-item-delete-button" onClick={deleteItem}
+          >delete</p>
     </div>
   )
 }

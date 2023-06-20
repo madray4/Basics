@@ -14,15 +14,17 @@ import Products from './pages/Products/Products';
 import SingleProduct from './pages/SingleProduct/SingleProduct';
 
 // functions
+import { addItemToCart } from './store/slices/cartSlice';
 import { getProducts } from './store/slices/productSlice';
 
 
 function App() {
   const dispatch = useDispatch();
+  const { user } = useSelector(state => state.auth);
 
-    useEffect(() => {
-      dispatch(getProducts());
-    },[dispatch]);
+  useEffect(() => {
+    dispatch(getProducts());
+  },[dispatch]);
 
   return (
     <div className="App" style={{backgroundColor: '#FAF9F8'}}>

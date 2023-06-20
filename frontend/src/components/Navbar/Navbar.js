@@ -24,7 +24,11 @@ const Navbar = () => {
               <p className='navbar-signup-button'>Sign Up</p>
             </Link>
           }
-          {user && <h4>{user.email}</h4>}
+          {user && 
+            <Link to="/auth/login">
+          <h4>{user.email}</h4>
+            </Link>
+          }
           <Link className="navbar-shopping-cart" to="/cart">
             <p className="navbar-shopping-cart-item-count">{totalQuantity}</p>
             <span className="material-symbols-outlined">shopping_basket</span>

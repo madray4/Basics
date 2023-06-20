@@ -12,6 +12,8 @@ const SingleProduct = () => {
   const dispatch = useDispatch();
   const { PID } = useParams();
 
+  const { user } = useSelector(state => state.auth);
+  const { cartItems } = useSelector(state => state.cart);
   const { products } = useSelector(state => state.product);
   const currentProduct = products.filter(product => PID === product._id)[0];
   const similarProducts = currentProduct ? products.filter(product => currentProduct.name === product.name) : "";
@@ -32,7 +34,9 @@ const SingleProduct = () => {
     const cartItem = {
       product: currentProduct,
       size: selectedSize,
-      quantity: 1
+      quantity: 1,
+      currentCart: cartItems,
+      email: user ? user.email : ""
     };
     dispatch(addItemToCart(cartItem));
   };

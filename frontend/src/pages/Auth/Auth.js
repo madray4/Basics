@@ -4,15 +4,17 @@ import { useState, useRef } from 'react';
 
 // redux
 import { useDispatch, useSelector } from 'react-redux';
-import { login, logout, signup } from '../../store/slices/authSlice';
 import { useParams } from 'react-router-dom';
+
+import { login, logout, signup } from '../../store/slices/authSlice';
+import { updateCartAuth } from '../../store/slices/cartSlice';
 
 const Auth = () => {
   const dispatch = useDispatch();
-  
+  const { cartItems } = useSelector(state => state.cart);
   // used to determine whether user is attempting to login or signup
   const { choice } = useParams()
-  const { user } = useSelector(state => state.auth);
+  // const { user } = useSelector(state => state.auth);
   
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -25,8 +27,9 @@ const Auth = () => {
   //   await dispatch(login({ email: emailRef.current.value, password: passwordRef.current.value }));
   // };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     dispatch(logout());
+    await dispatch(updateCartAuth({cartItems: [], currentCart: []}))
   };
 
   const handleSignup = async (e) => {
@@ -38,7 +41,8 @@ const Auth = () => {
     e.preventDefault();
 
     if(choice === 'login'){
-      await dispatch(login({ email: emailRef.current.value, password: passwordRef.current.value }));
+      const { payload }  = await dispatch(login({ email: emailRef.current.value, password: passwordRef.current.value }));
+      await dispatch(updateCartAuth({cartItems: payload.cartItems, currentCart: cartItems, email: payload.email}));
     }
     else{
       await dispatch(signup({ email: emailRef.current.value, password: passwordRef.current.value }));
