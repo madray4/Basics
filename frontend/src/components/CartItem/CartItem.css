@@ -9,9 +9,9 @@
   background-color: white;
   border-radius: 10px;
   padding: 10px 0px;
-  padding-left: 10px;
+  padding-left: 2.5%;
+  padding-right: 2.5%;
   outline: 1px solid var(--outline);
-  
 }
 
 .cart-item img{
@@ -37,12 +37,75 @@
   margin-top: 20px
 }
 
-.cart-item-edit-button{
-  margin: 20px 40px auto auto;
+/* .cart-item-editing-wrapper{
+  display: grid;
+  align-items: center;
+  font-size: 1em;
+} */
+
+.cart-item-editing-wrapper{
+  display: flex;
+  gap: 1%;
+  align-items: center;
+}
+
+.cart-item-editing-wrapper input {
+  width: 10%;
+  border: none;
+  outline: 1px solid var(--outline);
+  border-radius: 10px;
+  text-align: center;
+}
+
+.cart-item-close-button{
+  color:red;
+  outline: 1px solid var(--outline);
+  border-radius: 10px;
   cursor: pointer;
+  font-size: 1.5em;
+}
+
+.cart-item-close-button:hover{
+  outline: 1px solid black;
+}
+
+.cart-item-confirm-button{
+  color: green;
+  cursor: pointer;
+  outline: 1px solid var(--outline);
+  border-radius: 10px;
+  font-size: 1.5em;
+}
+
+.cart-item-confirm-button:hover{
+  outline: 1px solid black;
+}
+
+.cart-item-buttons{
+  padding-top: 2.5%;
+  width: 5%;
+  height: 100%;
+  align-self: start;
+  display: grid;
+  gap: 10%;
+  grid-template-columns: 1fr;
+}
+
+.cart-item-edit-button{
+  cursor: pointer;
+  outline: 1px solid var(--outline);
+  border-radius: 10px;
+  justify-self: center;
 }
 
 .cart-item-delete-button{
-  margin: 20px 20px auto auto;
+  color:red;
   cursor: pointer;
+  outline: 1px solid var(--outline);
+  border-radius: 10px;
+  justify-self: center;
+}
+
+.cart-item-buttons > *:hover {
+  outline: 1px solid black;
 }
