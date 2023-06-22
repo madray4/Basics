@@ -4,11 +4,20 @@ const initialUser = JSON.parse(localStorage.getItem('user'));
 let initialQuantity = 0;
 let initialCost = 0;
 
+const calculateCartQuantityAndCost = async (cartItems) => {
+  let newTotalQuantity = 0;
+  let newTotalCost = 0;
+  cartItems.map(cartItem => {
+    newTotalQuantity += cartItem.quantity;
+    newTotalCost += cartItem.quantity * cartItem.product.price;
+  });
+  return { newTotalQuantity, newTotalCost };
+};
+
 if(initialUser){
-  initialUser.cartItems.map(cartItem => {
-    initialQuantity += cartItem.quantity;
-    initialCost += cartItem.quantity * cartItem.product.price;
-  })
+  const { newTotalQuantity, newTotalCost } = await calculateCartQuantityAndCost(initialUser.cartItems);
+  initialQuantity = newTotalQuantity;
+  initialCost = newTotalCost;
 }
 
 const initialState = {
@@ -61,15 +70,7 @@ const updateLocalStorage = async (newCartItems) => {
   localStorage.setItem('user', JSON.stringify(user));
 };
 
-const calculateCartQuantityAndCost = async (cartItems) => {
-  let newTotalQuantity = 0;
-  let newTotalCost = 0;
-  cartItems.map(cartItem => {
-    newTotalQuantity += cartItem.quantity;
-    newTotalCost += cartItem.quantity * cartItem.product.price;
-  });
-  return { newTotalQuantity, newTotalCost };
-};
+
 
 export const addItemToCart = createAsyncThunk(
   'cart/addItemToCart',
@@ -101,8 +102,8 @@ export const updateWholeCart = createAsyncThunk(
     for(let i = 0; i < cartItems.length; i++){
       newCartItems = await updateCartItems({...cartItems[i], currentCart: newCartItems});
     };
-
     const { newTotalQuantity, newTotalCost } = await calculateCartQuantityAndCost(newCartItems);
+
     if(currentCart.length > 0) {
       const response = await updateDatabaseCart(newCartItems, email);
       if(response.ok){
@@ -110,34 +111,28 @@ export const updateWholeCart = createAsyncThunk(
         return({ newCartItems, newTotalQuantity, newTotalCost});
       };
     };
-    updateLocalStorage(newCartItems);
     return {newCartItems, newTotalQuantity, newTotalCost};
   }
 );
 
 export const deleteCartItem = createAsyncThunk(
   'cart/deleteCartItem',
-  async ({ product, size, quantity, currentCart, email }, { rejectWithValue }) => {
-    // console.log(currentCart);
-    let newCartItems = currentCart.filter(cartItem => (cartItem.size !== size && cartItem.product._id !== product._id));
-    // console.log(newCartItems);
+  async ({ product, size, currentCart, email }, { rejectWithValue }) => {
+
+    let newCartItems = currentCart.filter(cartItem => (cartItem.product._id !== product._id || cartItem.size !== size));
+    const { newTotalQuantity, newTotalCost } = await calculateCartQuantityAndCost(newCartItems);
+
     if(email){
-      const response = await fetch('/api/cart/update-cart', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json'},
-        body: JSON.stringify({ newCartItems, email })
-      });
+      const response = await updateDatabaseCart(newCartItems, email);
       if(response.ok){
         updateLocalStorage(newCartItems);
-        return({ newCartItems, quantity });
-
+        return {newCartItems, newTotalQuantity, newTotalCost};
       }
       else{
         return rejectWithValue({ currentCart, quantity: 0 });
       }
     }
-
-    return({ newCartItems, quantity });
+    return {newCartItems, newTotalQuantity, newTotalCost};
   }
 );
 
@@ -182,7 +177,8 @@ const cartSlice = createSlice({
     builder.addCase(deleteCartItem.fulfilled, (state, action) => {
       return { ...state, 
         cartItems: action.payload.newCartItems,
-        totalQuantity: state.totalQuantity - action.payload.quantity,
+        totalQuantity: action.payload.newTotalQuantity,
+        totalCost: action.payload.newTotalCost,
         loading: false};
     });
   }

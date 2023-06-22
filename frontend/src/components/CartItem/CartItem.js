@@ -17,7 +17,7 @@ const CartItem = ({cartItem}) => {
   const deleteItem = () => {
     let email = "";
     if(user) email = user.email;
-    dispatch(deleteCartItem({product, size, quantity, currentCart: cartItems, email}));
+    dispatch(deleteCartItem({product, size, currentCart: cartItems, email}));
   };
 
   const editQuantity = () => {
