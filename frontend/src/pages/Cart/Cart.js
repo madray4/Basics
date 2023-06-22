@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import CartItem from '../../components/CartItem/CartItem'
 
 const Cart = () => {
-  const { cartItems, totalQuantity } = useSelector(state => state.cart);
+  const { cartItems, totalQuantity, totalCost } = useSelector(state => state.cart);
 
   return (
     <div className="cart-page">
@@ -21,6 +21,8 @@ const Cart = () => {
         </div>
         <div className="cart-page-sidebar">
           <p className="center">sidebar</p>
+          <p>Total Quantity: {totalQuantity}</p>
+          <p>Total Cost: {totalCost}</p>
         </div>
       </div>
     </div>

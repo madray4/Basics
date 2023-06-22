@@ -35,15 +35,14 @@ const CartItem = ({cartItem}) => {
         <div className="cart-item-main-description">
           <p>Color: &nbsp;{product.color}</p>
           <p>Size: &nbsp;{size}</p>
-          <p>Quantity: &nbsp;{quantity}
-            <p className="material-symbols-outlined cart-item-edit-button" onClick={editQuantity}
-                >edit</p>
-          </p>
+          <p>Quantity: &nbsp;{quantity}</p>
           <p>Total: &nbsp;${total}</p>
         </div>
       </div>
       <p className="material-symbols-outlined cart-item-delete-button" onClick={deleteItem}
           >delete</p>
+      <p className="material-symbols-outlined cart-item-edit-button" onClick={editQuantity}
+          >edit</p>
     </div>
   )
 }

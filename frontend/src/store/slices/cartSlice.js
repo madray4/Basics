@@ -2,37 +2,91 @@ import { createSlice , createAsyncThunk } from '@reduxjs/toolkit'
 
 const initialUser = JSON.parse(localStorage.getItem('user'));
 let initialQuantity = 0;
+let initialCost = 0;
+
 if(initialUser){
-  initialUser.cartItems.map(cartItem => initialQuantity += cartItem.quantity);
+  initialUser.cartItems.map(cartItem => {
+    initialQuantity += cartItem.quantity;
+    initialCost += cartItem.quantity * cartItem.product.price;
+  })
 }
 
 const initialState = {
   cartItems: initialUser ? initialUser.cartItems : [],
   totalQuantity: initialQuantity,
+  totalCost: initialCost,
   loading: false
 }
+
+const updateCartItems = async ({ product, size, quantity, currentCart }) => {
+  let newCartItems = [...currentCart];
+  let exists = false;
+  // search for if the item already exists in cart and update quantity
+  newCartItems = newCartItems.map(cartItem => {
+    if(cartItem.size === size && cartItem.product._id === product._id){
+      const newCartItem = {
+        ...cartItem,
+        quantity: cartItem.quantity + quantity
+      }
+      cartItem = newCartItem;
+      exists = true;
+    }
+    return cartItem;
+  });
+  // if items doesn't already exist, create a new cart item object and push
+  if(!exists){
+    const newCartItem = {
+      product,
+      size,
+      quantity: quantity
+    }
+    newCartItems.push(newCartItem);
+  }
+  return newCartItems;
+};
+
+const updateDatabaseCart = async (newCartItems, email) => {
+  const response = await fetch('/api/cart/update-cart', {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json'},
+    body: JSON.stringify({ newCartItems, email })
+  });
+  return response;
+};
+
+const updateLocalStorage = async (newCartItems) => {
+  let user = JSON.parse(localStorage.getItem('user'));
+  user.cartItems = newCartItems;
+  localStorage.setItem('user', JSON.stringify(user));
+};
+
+const calculateCartQuantityAndCost = async (cartItems) => {
+  let newTotalQuantity = 0;
+  let newTotalCost = 0;
+  cartItems.map(cartItem => {
+    newTotalQuantity += cartItem.quantity;
+    newTotalCost += cartItem.quantity * cartItem.product.price;
+  });
+  return { newTotalQuantity, newTotalCost };
+};
 
 export const addItemToCart = createAsyncThunk(
   'cart/addItemToCart',
   async ({ product, size, quantity, currentCart, email}, { rejectWithValue }) => {
     let newCartItems = await updateCartItems({ product, size, quantity, currentCart });
-
+    const { newTotalQuantity, newTotalCost } = await calculateCartQuantityAndCost(newCartItems);
     // updates the users cart in database if logged in
     if(email){
-      const response = await fetch('/api/cart/update-cart', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json'},
-        body: JSON.stringify({ newCartItems, email })
-      });
+      const response = await updateDatabaseCart(newCartItems, email);
       if(response.ok){
         updateLocalStorage(newCartItems);
-        return({ newCartItems, quantity });
+        return({ newCartItems, newTotalQuantity, newTotalCost});
       }
       else{
-        return rejectWithValue({ currentCart, quantity: 0 });
+        return rejectWithValue({ currentCart, newTotalQuantity , newTotalCost});
       }
     }
-    return({ newCartItems, quantity });
+    return({ newCartItems, newTotalQuantity, newTotalCost});
   }
 );
 
@@ -81,9 +135,6 @@ export const deleteCartItem = createAsyncThunk(
       });
       if(response.ok){
         updateLocalStorage(newCartItems);
-        // let user = JSON.parse(localStorage.getItem('user'));
-        // user.cartItems = newCartItems;
-        // localStorage.setItem('user', JSON.stringify(user));
         return({ newCartItems, quantity });
 
       }
@@ -95,37 +146,6 @@ export const deleteCartItem = createAsyncThunk(
     return({ newCartItems, quantity });
   }
 );
-
-const updateCartItems = async ({ product, size, quantity, currentCart }) => {
-  let newCartItems = [...currentCart];
-  let exists = false;
-  newCartItems = newCartItems.map(cartItem => {
-    if(cartItem.size === size && cartItem.product._id === product._id){
-      const newCartItem = {
-        ...cartItem,
-        quantity: cartItem.quantity + quantity
-      }
-      cartItem = newCartItem;
-      exists = true;
-    }
-    return cartItem;
-  });
-  if(!exists){
-    const newCartItem = {
-      product,
-      size,
-      quantity: quantity
-    }
-    newCartItems.push(newCartItem);
-  }
-  return newCartItems;
-};
-
-  const updateLocalStorage = async (newCartItems) => {
-    let user = JSON.parse(localStorage.getItem('user'));
-    user.cartItems = newCartItems;
-    localStorage.setItem('user', JSON.stringify(user));
-  }
 
 const cartSlice = createSlice({
   name: "Cart",
@@ -143,7 +163,8 @@ const cartSlice = createSlice({
     builder.addCase(addItemToCart.fulfilled, (state, action) => {
       return { ...state, 
         cartItems: action.payload.newCartItems,
-        totalQuantity: state.totalQuantity + action.payload.quantity,
+        totalQuantity: action.payload.newTotalQuantity,
+        totalCost: action.payload.newTotalCost,
         loading: false};
     });
 
