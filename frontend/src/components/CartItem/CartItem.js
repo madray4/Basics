@@ -31,7 +31,10 @@ const CartItem = ({cartItem}) => {
       setEditing(false);
     }
     else{
-      console.log("last choice")
+      // update store with new quantity
+      let newQuantityDiff = newQuantity - quantity;
+      dispatch(addItemToCart({product, size, quantity: newQuantityDiff, currentCart: cartItems, email}))
+      setEditing(false);
     }
   };
 
@@ -49,7 +52,7 @@ const CartItem = ({cartItem}) => {
           {editing &&
             <div className="cart-item-editing-wrapper">
               <p>Quantity: </p>
-              <input type="number" ref={quantityRef} default={quantity}/>
+              <input type="number" ref={quantityRef} placeholder={quantity}/>
               <p className="material-symbols-outlined cart-item-close-button"
                   onClick={() => setEditing(false)}>close</p>
               <p className="material-symbols-outlined cart-item-confirm-button"

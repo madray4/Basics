@@ -1,3 +1,9 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 .cart-item{
   /* outline: 1px solid red; */
   display: flex;
@@ -45,7 +51,7 @@
 
 .cart-item-editing-wrapper{
   display: flex;
-  gap: 1%;
+  gap: 2%;
   align-items: center;
 }
 
@@ -55,6 +61,7 @@
   outline: 1px solid var(--outline);
   border-radius: 10px;
   text-align: center;
+  font-size: 1em;
 }
 
 .cart-item-close-button{
