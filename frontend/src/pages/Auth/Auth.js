@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import { login, logout, signup } from '../../store/slices/authSlice';
-import { updateCartAuth } from '../../store/slices/cartSlice';
+import { updateWholeCart } from '../../store/slices/cartSlice';
 
 const Auth = () => {
   const dispatch = useDispatch();
@@ -29,7 +29,7 @@ const Auth = () => {
 
   const handleLogout = async () => {
     dispatch(logout());
-    await dispatch(updateCartAuth({cartItems: [], currentCart: []}))
+    await dispatch(updateWholeCart({cartItems: [], currentCart: []}))
   };
 
   const handleSignup = async (e) => {
@@ -42,7 +42,7 @@ const Auth = () => {
 
     if(choice === 'login'){
       const { payload }  = await dispatch(login({ email: emailRef.current.value, password: passwordRef.current.value }));
-      await dispatch(updateCartAuth({cartItems: payload.cartItems, currentCart: cartItems, email: payload.email}));
+      await dispatch(updateWholeCart({cartItems: payload.cartItems, currentCart: cartItems, email: payload.email}));
     }
     else{
       await dispatch(signup({ email: emailRef.current.value, password: passwordRef.current.value }));
