@@ -29,7 +29,7 @@ const Auth = () => {
 
   const handleLogout = async () => {
     dispatch(logout());
-    await dispatch(updateWholeCart({cartItems: [], currentCart: []}))
+    await dispatch(updateWholeCart({cartItems: [], currentCart: []}));
   };
 
   const handleSignup = async (e) => {

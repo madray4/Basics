@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-
-// redux
 import { useDispatch, useSelector } from 'react-redux';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 // components
 import Navbar from './components/Navbar/Navbar';
@@ -23,6 +21,7 @@ import { getProducts } from './store/slices/productSlice';
 function App() {
   const dispatch = useDispatch();
   const { user } = useSelector(state => state.auth);
+  const { cartItems } = useSelector(state => state.cart);
 
   useEffect(() => {
     dispatch(getProducts());
@@ -40,7 +39,7 @@ function App() {
           />
           <Route
             path='/auth/:choice'
-            element={<Auth/>}
+            element={ user ? <Navigate to="/products/all"/> : <Auth/> }
           />
           <Route
             path='/products/:productType'
@@ -56,7 +55,7 @@ function App() {
           />
           <Route
             path='/checkout'
-            element={<Checkout/>}
+            element={ cartItems ? <Checkout/> : <Navigate to="/products/all"/> }
           />
           <Route
             path='/order/:id'

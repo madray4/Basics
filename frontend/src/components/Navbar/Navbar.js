@@ -1,9 +1,16 @@
 import './Navbar.css';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import { logout } from '../../store/slices/authSlice';
+import { updateWholeCart } from '../../store/slices/cartSlice';
+
+
+
 const Navbar = () => {
+  const dispatch = useDispatch();
+
   const { user } = useSelector(state => state.auth);
   const { totalQuantity } = useSelector(state => state.cart);
 
@@ -26,8 +33,14 @@ const Navbar = () => {
           }
           {user && 
             <Link to="/auth/login">
-          <h4>{user.email}</h4>
+              <h2>{user.email}</h2>
             </Link>
+          }
+          {user && 
+            <p className="navbar-login-button" onClick={() => {
+              dispatch(logout());
+              dispatch(updateWholeCart({cartItems: [], currentCart: []}));
+            }}>Log Out</p>
           }
           <Link className="navbar-shopping-cart" to="/cart">
             <p className="navbar-shopping-cart-item-count">{totalQuantity}</p>

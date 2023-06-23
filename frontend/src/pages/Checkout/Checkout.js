@@ -17,11 +17,11 @@ const Checkout = () => {
   const [ emptyFields, setEmptyFields ] = useState([]);
 
   // redirect if there are no items in cart
-  useEffect(() => {
-    if(totalQuantity === 0 ){
-      navigate("/products/all");
-    }
-  });
+  // useEffect(() => {
+  //   if(totalQuantity === 0 ){
+  //     navigate("/products/all");
+  //   }
+  // });
 
   const emailRef = useRef();
   const firstNameRef = useRef();

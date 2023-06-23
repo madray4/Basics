@@ -38,6 +38,7 @@ a {
   background-color: black;
   padding: 3px 10px;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .navbar-signup-button{

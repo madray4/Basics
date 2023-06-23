@@ -50,6 +50,6 @@ const orderSchema = new Schema({
     type: Number,
     required: true
   }
-});
+},{ timestamp: true });
 
 module.exports = mongoose.model('Order', orderSchema);
