@@ -7,6 +7,8 @@ import CartItem from '../../components/CartItem/CartItem'
 
 const Cart = () => {
   const { cartItems, totalQuantity, totalCost } = useSelector(state => state.cart);
+  const tax = (totalCost * 0.04).toFixed(2);
+  const finalCost = (totalCost + 5.99 + Number(tax)).toFixed(2);
 
   return (
     <div className="cart-page">
@@ -20,9 +22,27 @@ const Cart = () => {
           { totalQuantity === 0 && <h1 className="center">You should add something to your cart!</h1> }
         </div>
         <div className="cart-page-sidebar">
-          <p className="center">sidebar</p>
-          <p>Total Quantity: {totalQuantity}</p>
-          <p>Total Cost: {totalCost}</p>
+          <div className="cart-total-details">
+            <div className="cart-total-detail">
+              <p>Order Value</p>
+              <p>${totalCost}</p>
+            </div>
+            <div className="cart-total-detail">
+              <p>Shipping</p>
+              <p>$5.99</p>
+            </div>
+            <div className="cart-total-detail">
+              <p>Tax</p>
+              <p>${tax}</p>
+            </div>
+            <br/>
+            <hr/>
+            <div className="cart-total-detail">
+              <p>Total</p>
+              <p>${finalCost}</p>
+            </div>
+            <button className="cart-checkout-button">Continue to Checkout</button>
+          </div>
         </div>
       </div>
     </div>

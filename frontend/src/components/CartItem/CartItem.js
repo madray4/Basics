@@ -36,6 +36,7 @@ const CartItem = ({cartItem}) => {
       dispatch(addItemToCart({product, size, quantity: newQuantityDiff, currentCart: cartItems, email}))
       setEditing(false);
     }
+    quantityRef.current.value = "";
   };
 
   return (
@@ -49,29 +50,22 @@ const CartItem = ({cartItem}) => {
         <div className="cart-item-main-description">
           <p>Color: &nbsp;{product.color}</p>
           <p>Size: &nbsp;{size}</p>
-          {editing &&
-            <div className="cart-item-editing-wrapper">
-              <p>Quantity: </p>
-              <input type="number" ref={quantityRef} placeholder={quantity}/>
-              <p className="material-symbols-outlined cart-item-close-button"
-                  onClick={() => setEditing(false)}>close</p>
-              <p className="material-symbols-outlined cart-item-confirm-button"
-                  onClick={editQuantity}>check</p>
-            </div> 
-          }
-          {!editing && 
-            <p>Quantity: &nbsp;{quantity}</p>
-          }
+          <div className="cart-item-editing-wrapper">
+            <p>Quantity: </p>
+            <input type="number" ref={quantityRef} placeholder={quantity}
+                    onChange={ () => setEditing(true) }/>
+            {editing && <p className="material-symbols-outlined cart-item-close-button"
+                  onClick={() => {
+                    setEditing(false);
+                    quantityRef.current.value = ""}}>close</p>}
+            {editing && <p className="material-symbols-outlined cart-item-confirm-button"
+                  onClick={editQuantity}>check</p>}
+          </div>
           <p>Total: &nbsp;${total}</p>
         </div>
       </div>
-      <div className="cart-item-buttons">
-        <p className="material-symbols-outlined cart-item-edit-button" 
-            onClick={() => setEditing(true)}
-            >edit</p>
-        <p className="material-symbols-outlined cart-item-delete-button" onClick={deleteItem}
+      <p className="material-symbols-outlined cart-item-delete-button" onClick={deleteItem}
             >delete</p>
-      </div>
     </div>
   )
 }

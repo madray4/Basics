@@ -5,19 +5,17 @@ input::-webkit-inner-spin-button {
 }
 
 .cart-item{
-  /* outline: 1px solid red; */
   display: flex;
   margin: auto;
-  /* justify-content: center; */
   align-items: center;
-  width: 90%;
-  margin-top: 10px;
+  width: 90%; 
   background-color: white;
   border-radius: 10px;
   padding: 10px 0px;
   padding-left: 2.5%;
   padding-right: 2.5%;
   outline: 1px solid var(--outline);
+  margin-top: 2%;
 }
 
 .cart-item img{
@@ -88,29 +86,16 @@ input::-webkit-inner-spin-button {
   outline: 1px solid black;
 }
 
-.cart-item-buttons{
-  padding-top: 2.5%;
-  width: 5%;
-  height: 100%;
-  align-self: start;
-  display: grid;
-  gap: 10%;
-  grid-template-columns: 1fr;
-}
-
-.cart-item-edit-button{
-  cursor: pointer;
-  outline: 1px solid var(--outline);
-  border-radius: 10px;
-  justify-self: center;
-}
-
 .cart-item-delete-button{
   color:red;
   cursor: pointer;
   outline: 1px solid var(--outline);
   border-radius: 10px;
-  justify-self: center;
+  align-self: start;
+  text-align: center;
+  margin-top: 2.5%;
+  font-size: 2em;
+  padding: 0.5%;
 }
 
 .cart-item-buttons > *:hover {
