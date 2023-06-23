@@ -30,7 +30,7 @@ const orderSchema = new Schema({
     type: String,
     required: true
   },
-  postalCode: {
+  zipCode: {
     type: Number,
     required: true
   },

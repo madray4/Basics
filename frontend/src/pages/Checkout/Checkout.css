@@ -2,6 +2,10 @@ input {
   height: 2em;
 }
 
+.error{
+  border: 1px solid #e7195a;
+}
+
 .checkout-page{
   width: 75%;
   margin:auto;
