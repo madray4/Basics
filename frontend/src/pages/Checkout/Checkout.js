@@ -11,19 +11,48 @@ const Checkout = () => {
   const { cartItems, totalQuantity, totalCost } = useSelector(state => state.cart);
   const tax = (totalCost * 0.04).toFixed(2);
   const finalCost = (totalCost + 5.99 + Number(tax)).toFixed(2);
-  
-  useEffect(() => {
-    if(totalQuantity === 0 ){
-      navigate("/products/all");
-    }
-  });
+
+  // redirect if there are no items in cart
+  // useEffect(() => {
+  //   if(totalQuantity === 0 ){
+  //     navigate("/products/all");
+  //   }
+  // });
 
   return (
     <div className="checkout-page">
       <h1 className="center">Checkout</h1>
       <div className="checkout-page-main">
         <div className="checkout-page-details">
-          <p>Something</p>
+          <br/>
+          <div className="checkout-page-details-wrapper">
+            <h3>My Information</h3>
+            <p>Email</p>
+            <input type="text"></input>
+            <div className="checkout-two-details">
+              <p>First Name</p>
+              <p>Last Name</p>
+              <input type="text"></input>
+              <input type="text"></input>
+            </div>
+          </div>
+          <br/>
+          <div className="checkout-page-details-wrapper">
+            <h3>Billing/Shipping Address</h3>
+            <p>Address</p>
+            <input type="text"></input>
+            <p>Address Line 2</p>
+            <input type="text"></input>
+            <div className="checkout-two-details">
+              <p>Town/City</p>
+              <p>Postal Code</p>
+              <input type="text"></input>
+              <input type="text"></input>
+            </div>
+            <p>State</p>
+            <input type="text"></input>
+          </div>
+          <br/>
         </div>
         <div className="checkout-page-sidebar">
             <div className="checkout-total-details">
@@ -45,9 +74,7 @@ const Checkout = () => {
                 <p>Total</p>
                 <p>${finalCost}</p>
               </div>
-              {/* <Link to="/checkout">
-                <button className="cart-checkout-button">Continue to Checkout</button>
-              </Link> */}
+              <button className="checkout-placeorder-button">Place Order</button>
             </div>
         </div>
       </div>

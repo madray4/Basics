@@ -1,3 +1,7 @@
+input {
+  height: 2em;
+}
+
 .checkout-page{
   width: 75%;
   margin:auto;
@@ -11,8 +15,32 @@
 }
 
 .checkout-page-details{
-  width: 70%;
+  width: 60%;
+  background-color: white;
+  border-radius: 10px;
+  outline: 1px solid var(--outline);
 }
+
+.checkout-page-details-wrapper{
+  width: 90%;
+  margin: auto;
+  margin-top: 2%;
+}
+
+.checkout-page-details-wrapper > *{
+  width: 100%;
+  margin-top: 1%;
+}
+
+.checkout-two-details{
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2%;
+}
+
+
+
 
 
 .checkout-page-sidebar{
@@ -39,4 +67,17 @@ hr{
   width: 90%;
   margin: auto;
   color: black;
+}
+
+.checkout-placeorder-button{
+  width: 90%;
+  margin-top: 5%;
+  margin-left: 5%;
+  font-size: 1em;
+  height: 3em;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
 }
