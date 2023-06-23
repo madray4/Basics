@@ -11,6 +11,7 @@ import Cart from './pages/Cart/Cart';
 import Checkout from './pages/Checkout/Checkout';
 import Order from './pages/Order/Order';
 import Products from './pages/Products/Products';
+import Profile from './pages/Profile/Profile';
 import SingleProduct from './pages/SingleProduct/SingleProduct';
 
 // functions
@@ -60,6 +61,10 @@ function App() {
           <Route
             path='/order/:id'
             element={<Order/>}
+          />
+          <Route
+            path='/profile'
+            element={ user ? <Profile/> : <Navigate to='/auth/login'/> }
           />
         </Routes>
       </div>

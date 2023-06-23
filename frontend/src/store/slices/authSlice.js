@@ -34,15 +34,12 @@ export const logout = createAsyncThunk(
 export const signup = createAsyncThunk(
   'auth/signup',
   async ({ email, password }, { rejectWithValue }) => {
-    console.log("here")
     const response = await fetch('/api/user/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json'},
       body: JSON.stringify({ email, password })
     });
     const json = await response.json();
-    console.log("here")
-    console.log(json);
     if(response.ok){
       localStorage.setItem('user', JSON.stringify(json));
       return json;
@@ -50,6 +47,27 @@ export const signup = createAsyncThunk(
     return rejectWithValue(json);
   }
 );
+
+// TO DO - create function to update user's profile information
+
+export const updateProfileInformation = createAsyncThunk(
+  'auth/updateProfileInformation',
+  async({newProfile, email}, { rejectWithValue }) => {
+    const response = await fetch('/api/user/update-profile-information', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json'},
+      body: JSON.stringify({ newProfile, email })
+    })
+    const json = await response.json();
+
+    if(response.ok){
+      let user = await JSON.parse(localStorage.getItem('user'));
+      user.profile = newProfile;
+      localStorage.setItem('user', JSON.stringify(user));
+      return(user);
+    }
+  }
+)
 
 const authSlice = createSlice({
   name: "Auth",
@@ -86,6 +104,7 @@ const authSlice = createSlice({
       return { ...state, loading: true }
     });
     builder.addCase(signup.rejected, (state, action) => {
+      console.log(action.payload);
       return { ...state,
         loading: false,
         error: action.payload.error,
@@ -93,6 +112,25 @@ const authSlice = createSlice({
       }
     });
     builder.addCase(signup.fulfilled, (state, action) => {
+      return { ...state,
+        loading: false,
+        error: null,
+        emptyFields: [],
+        user: action.payload
+      }
+    });
+
+    // update profile cases
+    builder.addCase(updateProfileInformation.pending, (state) => {
+      return { ...state, loading: true }
+    });
+    builder.addCase(updateProfileInformation.rejected, (state, action) => {
+      return { ...state,
+        loading: false,
+        // error: action.payload.error
+      }
+    });
+    builder.addCase(updateProfileInformation.fulfilled, (state, action) => {
       return { ...state,
         loading: false,
         error: null,

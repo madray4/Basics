@@ -32,7 +32,7 @@ const Navbar = () => {
             </Link>
           }
           {user && 
-            <Link to="/auth/login">
+            <Link to="/profile">
               <h2>{user.email}</h2>
             </Link>
           }

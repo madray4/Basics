@@ -13,9 +13,9 @@ const login = async (req, res) => {
     const user = await User.login(email, password);
     // create a token
     const token = createToken(user._id);
-    res.status(200).json({ email, token, admin: user.admin, cartItems: user.cartItems});
+    res.status(200).json({ email, token, admin: user.admin, cartItems: user.cartItems, profile: user.profile });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error });
   }
 };
 
@@ -29,11 +29,24 @@ const signupUser = async (req, res) => {
     const token = createToken(user._id);
     res.status(200).json({ email, token, cart: user.cart });
   } catch (error) {
-    res.status(500).json({ error: error.message })
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// update user profile
+const updateProfileInformation = async (req, res) => {
+  const { newProfile, email } = req.body;
+  try {
+    const user = await User.findOneAndUpdate({ email }, { profile: newProfile });
+    res.status(200).json({ profile: user.profile });
+  }
+  catch (error){
+    res.status(500).json({ error: error.message });
   }
 };
 
 module.exports = {
   login,
-  signupUser
+  signupUser,
+  updateProfileInformation
 };
