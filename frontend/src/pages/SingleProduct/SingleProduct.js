@@ -20,11 +20,9 @@ const SingleProduct = () => {
   const [selectedSize, setSelectedSize ] = useState(currentProduct ? currentProduct.sizes[0] : ""); 
 
   // automatically selects a size if going directly to product page
-  useEffect(() => {
-    if(products && !currentProduct){
-      navigate("/products/all");
-    }
-  });
+  if(products && !currentProduct){
+    navigate("/products/all");
+  }
 
   // redirects to all products if a use attempts to access a product that doesn't exist
   if(currentProduct && selectedSize === ""){
@@ -48,7 +46,12 @@ const SingleProduct = () => {
     <div className="single-product-page">
     {currentProduct &&
       <div className="single-product-wrapper">
-        <img className="single-product-preview" src={currentProduct.imageURLs[0]} alt="LOADING"/>
+        <div className="single-product-preview-wrapper">
+          {currentProduct.imageURLs.map(imageURL => {
+            return <img className="single-product-preview" src={imageURL} alt="LOADING"></img>
+          })}
+        </div>
+        {/* <img className="single-product-preview" src={currentProduct.imageURLs[0]} alt="LOADING"/> */}
         <div className="single-product-description-wrapper">
           <h1>{currentProduct.name}</h1>
           <p>${currentProduct.price}</p>
