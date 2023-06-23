@@ -10,6 +10,7 @@ import Navbar from './components/Navbar/Navbar';
 // pages
 import Auth from './pages/Auth/Auth';
 import Cart from './pages/Cart/Cart';
+import Checkout from './pages/Checkout/Checkout';
 import Products from './pages/Products/Products';
 import SingleProduct from './pages/SingleProduct/SingleProduct';
 
@@ -51,6 +52,10 @@ function App() {
           <Route
             path='cart'
             element={<Cart/>}
+          />
+          <Route
+            path='checkout'
+            element={<Checkout/>}
           />
         </Routes>
       </div>

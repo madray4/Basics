@@ -1,0 +1,42 @@
+.checkout-page{
+  width: 75%;
+  margin:auto;
+  margin-top: 3%;
+}
+
+.checkout-page-main{
+  display: flex;
+  justify-content: space-around;
+  margin-top: 4%;
+}
+
+.checkout-page-details{
+  width: 70%;
+}
+
+
+.checkout-page-sidebar{
+  width: 30%;
+  margin-top: 2%;
+}
+
+.checkout-total-details{
+  outline: 1px solid var(--outline);
+  border-radius: 10px;
+  background-color: white;
+  padding: 4% 0;
+}
+
+.checkout-total-detail{
+  width: 90%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+hr{
+  /* border: 1px solid black; */
+  width: 90%;
+  margin: auto;
+  color: black;
+}

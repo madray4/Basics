@@ -1,6 +1,6 @@
 import './SingleProduct.css'
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 
@@ -20,9 +20,11 @@ const SingleProduct = () => {
   const [selectedSize, setSelectedSize ] = useState(currentProduct ? currentProduct.sizes[0] : ""); 
 
   // automatically selects a size if going directly to product page
-  if(products && !currentProduct){
+  useEffect(() => {
+    if(products && !currentProduct){
       navigate("/products/all");
-  }
+    }
+  });
 
   // redirects to all products if a use attempts to access a product that doesn't exist
   if(currentProduct && selectedSize === ""){

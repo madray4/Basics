@@ -1,6 +1,8 @@
 import './Cart.css'
 
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+
 
 // component
 import CartItem from '../../components/CartItem/CartItem'
@@ -41,7 +43,9 @@ const Cart = () => {
               <p>Total</p>
               <p>${finalCost}</p>
             </div>
-            <button className="cart-checkout-button">Continue to Checkout</button>
+            <Link to="/checkout">
+              <button className="cart-checkout-button">Continue to Checkout</button>
+            </Link>
           </div>
         </div>
       </div>
