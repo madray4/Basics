@@ -136,6 +136,20 @@ export const deleteCartItem = createAsyncThunk(
   }
 );
 
+export const clearCart = createAsyncThunk(
+  '/cart/clearCart',
+  async ({ email }) => {
+    const newCartItems = [];
+    if(email){
+      const response = await updateDatabaseCart(newCartItems, email);
+      if(response.ok){
+        updateLocalStorage([]);
+        return;
+      }
+    }
+    return;;
+  });
+
 const cartSlice = createSlice({
   name: "Cart",
   initialState,
@@ -173,12 +187,24 @@ const cartSlice = createSlice({
     // remove from cart cases
     builder.addCase(deleteCartItem.pending, (state) => {
       return { ...state, loading: true};
-    })
+    });
     builder.addCase(deleteCartItem.fulfilled, (state, action) => {
       return { ...state, 
         cartItems: action.payload.newCartItems,
         totalQuantity: action.payload.newTotalQuantity,
         totalCost: action.payload.newTotalCost,
+        loading: false};
+    });
+
+    // clear cart cases
+    builder.addCase(clearCart.pending, (state) => {
+      return { ...state, loading: true};
+    });
+    builder.addCase(clearCart.fulfilled, (state) => {
+      return { ...state, 
+        cartItems: [],
+        totalQuantity: 0,
+        totalCost: 0,
         loading: false};
     });
   }

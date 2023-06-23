@@ -1,11 +1,13 @@
 import './Checkout.css';
 
 import { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import { clearCart } from '../../store/slices/cartSlice';
 
 const Checkout = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { cartItems, totalQuantity, totalCost } = useSelector(state => state.cart);
@@ -15,11 +17,11 @@ const Checkout = () => {
   const [ emptyFields, setEmptyFields ] = useState([]);
 
   // redirect if there are no items in cart
-  // useEffect(() => {
-    // if(totalQuantity === 0 ){
-    //   navigate("/products/all");
-    // }
-  // });
+  useEffect(() => {
+    if(totalQuantity === 0 ){
+      navigate("/products/all");
+    }
+  });
 
   const emailRef = useRef();
   const firstNameRef = useRef();
@@ -66,7 +68,12 @@ const Checkout = () => {
       body: JSON.stringify(order)
     });
     const json = await response.json();
-    console.log(json);
+    if(response.ok){
+      let email = "";
+      if(user) email = user.email;
+      await dispatch(clearCart({email}));
+      navigate("/order/" + json.order._id);
+    }
   };
 
   const createAsterick = () => {

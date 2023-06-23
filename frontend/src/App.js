@@ -11,6 +11,7 @@ import Navbar from './components/Navbar/Navbar';
 import Auth from './pages/Auth/Auth';
 import Cart from './pages/Cart/Cart';
 import Checkout from './pages/Checkout/Checkout';
+import Order from './pages/Order/Order';
 import Products from './pages/Products/Products';
 import SingleProduct from './pages/SingleProduct/SingleProduct';
 
@@ -46,16 +47,20 @@ function App() {
             element={<Products/>}
           />
           <Route
-            path='product/:PID'
+            path='/product/:PID'
             element={<SingleProduct/>}
           />
           <Route
-            path='cart'
+            path='/cart'
             element={<Cart/>}
           />
           <Route
-            path='checkout'
+            path='/checkout'
             element={<Checkout/>}
+          />
+          <Route
+            path='/order/:id'
+            element={<Order/>}
           />
         </Routes>
       </div>

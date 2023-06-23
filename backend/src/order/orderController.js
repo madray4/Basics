@@ -6,6 +6,14 @@ const createOrder = async ( req, res ) => {
   res.status(200).json({order});
 }
 
+const getSingleOrder = async ( req, res ) => {
+  const { id } = req.params;
+  return res.redirect('/products/all');
+
+  const order = await Order.findById(id)
+}
+
 module.exports = {
-  createOrder
+  createOrder,
+  getSingleOrder
 }
