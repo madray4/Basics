@@ -18,7 +18,14 @@ const getSingleOrder = async ( req, res ) => {
   res.status(200).json(order);
 }
 
+const getAllOrders = async ( req, res ) => {
+  const { email } = req.body;
+  const orders = await Order.find({ email });
+  res.status(200).json(orders);
+}
+
 module.exports = {
   createOrder,
-  getSingleOrder
+  getSingleOrder,
+  getAllOrders
 }
