@@ -8,9 +8,14 @@ const createOrder = async ( req, res ) => {
 
 const getSingleOrder = async ( req, res ) => {
   const { id } = req.params;
-  return res.redirect('/products/all');
-
-  const order = await Order.findById(id)
+  if(!mongoose.Types.ObjectId.isValid(id)){
+    return res.status(500).json({error: 'No such entry'});
+  }
+  const order = await Order.findById(id);
+  if(!order) {
+    return res.status(500).json({error: 'No such entry'});
+  };
+  res.status(200).json(order);
 }
 
 module.exports = {
